@@ -6,6 +6,20 @@ import '../css/formulario.css';
 
 const Formulario = ({ modalVisible, setmodalVisible}) => {
     const [paciente, setPaciente] = useState('');
+    const [propietario, setPropietario] = useState('');
+    const [correo, setCorreo] = useState('');
+    const [telefono, setTelefono] = useState('');
+    const [fechaAlta, setFechaAlta] = useState('');
+    const [sintomas, setSintomas] = useState('');
+
+    /**
+     * 
+     */
+
+    const handleCita = (e) => {
+        e.preventDefault();
+    }
+
     return(
         <div className="formulario-contenido">
             <h2 className="formulario-titulo">Nueva 
@@ -18,7 +32,7 @@ const Formulario = ({ modalVisible, setmodalVisible}) => {
                 <span className="formulario-btn-texto-cancelar">Cancelar</span>
             </button>
 
-            <form>
+            <form onSubmit={(e) => handleCita(e)}>
                 <div className="formulario-campo">
                     <label
                     htmlFor="paciente"
@@ -33,6 +47,81 @@ const Formulario = ({ modalVisible, setmodalVisible}) => {
                     onChange={(e) => {setPaciente(e.target.value) }}
                     />
                 </div>
+                <div className="formulario-campo">
+                    <label
+                    htmlFor="propietario"
+                    className="formulario-label"
+                    >Nombre Propietario</label>
+                    <input
+                    id="propietario"
+                    type="text"
+                    className="formulario-input"
+                    placeholder="Zuriel Valencia"
+                    value={propietario}
+                    onChange={(e) => {setPropietario(e.target.value) }}
+                    />
+                </div>
+                <div className="formulario-campo">
+                    <label
+                    htmlFor="correo"
+                    className="formulario-label"
+                    >E-mail</label>
+                    <input
+                    id="correo"
+                    type="email"
+                    className="formulario-input"
+                    placeholder="tilininsano@gmail.com"
+                    value={correo}
+                    onChange={(e) => {setCorreo(e.target.value) }}
+                    />
+                </div>
+                <div className="formulario-campo">
+                    <label
+                    htmlFor="telefono"
+                    className="formulario-label"
+                    >Telefono</label>
+                    <input
+                    id="telefono"
+                    type="tel"
+                    className="formulario-input"
+                    placeholder="123456789"
+                    value={telefono}
+                    onChange={(e) => {setTelefono(e.target.value) }}
+                    />
+                </div>
+                <div className="formulario-campo">
+                    <label
+                    htmlFor="fechaAlta"
+                    className="formulario-label"
+                    >Fecha de ingreso</label>
+                    <input
+                    id="fechaAlta"
+                    type="date"
+                    className="formulario-input"
+                    placeholder="14/05/2026"
+                    value={fechaAlta}
+                    onChange={(e) => {setFechaAlta(e.target.value) }}
+                    />
+                </div>
+                <div className="formulario-campo">
+                    <label
+                    htmlFor="sintomas"
+                    className="formulario-label"
+                    >Sintomas que presenta</label>
+                    <textarea
+                    id="sintomas"
+                    className="formulario-input"
+                    placeholder="Falta de apetito"
+                    value={sintomas}
+                    onChange={(e) => {setSintomas(e.target.value) }}
+                    rows={4}
+                    />
+                </div>
+
+                <button
+                type="submit"
+                className="formulario-btn-submit"
+                >Agregar Paciente</button>
             </form>
         </div>
 
