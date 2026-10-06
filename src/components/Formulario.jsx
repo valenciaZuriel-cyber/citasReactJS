@@ -4,20 +4,52 @@ import { useState, useEffect } from "react";
 import '../css/formulario.css';
 
 
-const Formulario = ({ modalVisible, setmodalVisible}) => {
+const Formulario = ({ modalVisible, setmodalVisible, pacientes, setPacientes}) => {
     const [paciente, setPaciente] = useState('');
     const [propietario, setPropietario] = useState('');
     const [correo, setCorreo] = useState('');
     const [telefono, setTelefono] = useState('');
     const [fechaAlta, setFechaAlta] = useState('');
     const [sintomas, setSintomas] = useState('');
+    
 
     /**
-     * 
+     * una variable que guarda el valor del state
+     * funcion que modifica el state
+     * value=state
+     * .trim = borrar espacios en blanco
+     * [...variable] = copea la informacion de el array anterior
      */
 
     const handleCita = (e) => {
         e.preventDefault();
+
+        if([paciente.trim(), propietario.trim(), telefono.trim(), 
+            correo.trim(), fechaAlta.trim(), sintomas.trim()].includes('')){
+                console.log('Todos los campos son obligatorios');
+                window.alert('Error: Todos los campos son obligatorios');
+                return;
+        }
+
+        //Create an object with all values in the form
+        const nuevoPaciente = {
+            paciente,
+            propietario,
+            telefono,
+            correo,
+            fechaAlta,
+            sintomas
+
+        };
+
+        nuevoPaciente.id = Date.now();
+        console.log(nuevoPaciente);
+
+        //Save all new records
+        //state = add my object into the array
+
+        setPacientes([...pacientes, nuevoPaciente]);
+ 
     }
 
     return(
@@ -129,4 +161,4 @@ const Formulario = ({ modalVisible, setmodalVisible}) => {
 };
 
 
-export default Formulario
+export default Formulario;
