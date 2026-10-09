@@ -49,6 +49,7 @@ const Formulario = ({ modalVisible, setmodalVisible, pacientes, setPacientes}) =
         //state = add my object into the array
 
         setPacientes([...pacientes, nuevoPaciente]);
+        setmodalVisible(false);
  
     }
 

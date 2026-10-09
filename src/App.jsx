@@ -20,7 +20,22 @@ function App() {
         <span className='btn-texto-nueva-cita'>Nueva Cita</span>
       </button>
 
-       <Paciente/> 
+
+    {pacientes.map((paciente) => (
+      <Paciente
+       setmodalVisible={setmodalVisible}
+       pacientes={pacientes}
+       paciente={paciente}
+       key={paciente.id}
+      />
+    ))}
+
+{/*
+* Los argumentos son quienes hacen que la funcion que programamos avance, como la electricidad 
+con la computador
+ */}
+
+      
 
       {modalVisible && (
           <div className='modal-overlay' role='dialog' arial-modal="true">
@@ -39,4 +54,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
