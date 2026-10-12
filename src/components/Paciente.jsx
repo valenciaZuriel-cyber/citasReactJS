@@ -1,19 +1,25 @@
 import '../css/paciente.css';
 
-
+/**Properties */
 const Paciente = ({
     setmodalVisible,
     pacientes,
-    paciente
+    paciente,
+    eliminarPaciente
 }) => {
 /**
  * Los parametros son etiquetas que esperan recibir un estado (o funcion)
+ * handle: *buena practica* para identificar las funciones dentro del DOM (boton, input, formulario, trigger)
  */
     const handleEditar = () => {
         // Abrir el modal cuando se de CLick
         setmodalVisible(true);
         // Mostrar el array de pacientes en console-log
        console.log(pacientes);
+    }
+
+    const handleEliminar = () => {
+        eliminarPaciente(paciente.id);
     }
 
     return(
@@ -27,7 +33,8 @@ const Paciente = ({
                 <button 
                     className="paciente-btn paciente-btn-editar"
                     onClick={() => handleEditar()}>Editar</button>
-                <button className="paciente-btn paciente-btn-eliminar">Eliminar</button>
+                <button className="paciente-btn paciente-btn-eliminar"
+                    onClick={() => handleEliminar()}>Eliminar</button>
             </div>
         </article>
     )
