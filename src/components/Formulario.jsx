@@ -1,165 +1,122 @@
-// Formulario
-
+// Formulario 
 import { useState, useEffect } from "react";
 import '../css/formulario.css';
 
+/**
+ * Combina todo en uno solo, se puede ejecutar codigo antes, durante y despues de usar el estado...
+ * 
+ */
 
-const Formulario = ({ modalVisible, setmodalVisible, pacientes, setPacientes}) => {
+const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pacienteEditado }) => {
     const [paciente, setPaciente] = useState('');
-    const [propietario, setPropietario] = useState('');
+
+    //Create 5 new states
+    //nombrePropietario
+    //correo
+    //telefono
+    //fechaAlta
+    //sintomas (descripcion del problema)
+    //Create 5 new inputs
+    //Type Inputs: text, email, tel, date
+    //Inputs: input, textarea (contenido con mucho texto)
+    
+    //Formulario - Nuevo 
+
+    const [nombrePropietario, setNombrePropietario] = useState('');
     const [correo, setCorreo] = useState('');
     const [telefono, setTelefono] = useState('');
     const [fechaAlta, setFechaAlta] = useState('');
     const [sintomas, setSintomas] = useState('');
-    
 
-    /**
-     * una variable que guarda el valor del state
-     * funcion que modifica el state
-     * value=state
-     * .trim = borrar espacios en blanco
-     * [...variable] = copea la informacion de el array anterior
-     */
+    useEffect(() => {
+        console.log(pacienteEditado)
+        console.log(Object.keys(pacienteEditado))//No muta los keys los convierte en un array
+        console.log(Object.keys(pacienteEditado).length)
+        if(Object.keys(pacienteEditado).length > 0){
+            setPaciente(pacienteEditado.paciente);
+            setNombrePropietario(pacienteEditado.nombrePropietario);
+            setCorreo(pacienteEditado.correo);
+            setTelefono(pacienteEditado.telefono);
+            setFechaAlta(pacienteEditado.fechaAlta);
+            setSintomas(pacienteEditado.sintomas);
+        }
+
+    },[]);//Dependencias(se ponen estados) cada que se ejecute un cambio se estara ejecutando al mismo tiempo el useEffect
+
+    // Variable que contiene el valor del state, funcion que modifica el state
+
 
     const handleCita = (e) => {
         e.preventDefault();
-
-        if([paciente.trim(), propietario.trim(), telefono.trim(), 
-            correo.trim(), fechaAlta.trim(), sintomas.trim()].includes('')){
-                console.log('Todos los campos son obligatorios');
-                window.alert('Error: Todos los campos son obligatorios');
-                return;
+        if ([paciente.trim(), nombrePropietario.trim(), correo.trim(), telefono.trim(), fechaAlta, sintomas.trim()].includes('')) {
+            window.alert('Error: Todos los campos son obligatorios');
+            return;
         }
 
-        //Create an object with all values in the form
+        // Create an object with all values in the form
         const nuevoPaciente = {
             paciente,
-            propietario,
+            nombrePropietario,
             telefono,
             correo,
             fechaAlta,
             sintomas
-
         };
 
         nuevoPaciente.id = Date.now();
         console.log(nuevoPaciente);
 
-        //Save all new records
-        //state = add my object into the array
-
+        // Guarda todos los datos en el state 'pacientes'
         setPacientes([...pacientes, nuevoPaciente]);
-        setmodalVisible(false);
- 
+        // Usa el operador spread (...) para copiar los pacientes previos sin mutar el arreglo original y agrega el nuevoPaciente al final
+
+        // Cerrar el modal una vez guardada la cita
+        setModalVisible(false);
     }
 
-    return(
+    return (
         <div className="formulario-contenido">
-            <h2 className="formulario-titulo">Nueva 
+            <h2 className="formulario-titulo">Nueva
                 <span className="formulario-titulo-bold"> Cita</span>
             </h2>
-            <button
-                className="formulario-btn-cancelar"
-                onClick={() => { setmodalVisible(false) }}
+            <button 
+                className="formulario-btn-cancelar" 
+                onClick={() => { setModalVisible(false) }}
             >
                 <span className="formulario-btn-texto-cancelar">Cancelar</span>
             </button>
 
-            <form onSubmit={(e) => handleCita(e)}>
+            <form onSubmit={handleCita}>
                 <div className="formulario-campo">
-                    <label
-                    htmlFor="paciente"
-                    className="formulario-label"
-                    >Nombre Paciente</label>
-                    <input
-                    id="paciente"
-                    type="text"
-                    className="formulario-input"
-                    placeholder="perrito Poppy"
-                    value={paciente}
-                    onChange={(e) => {setPaciente(e.target.value) }}
-                    />
+                    <label htmlFor="paciente" className="formulario-label">Nombre Paciente</label>
+                    <input id="paciente" type="text" className="formulario-input" placeholder="Perrito Poppy" value={paciente} onChange={(e) => { setPaciente(e.target.value) }} />
                 </div>
                 <div className="formulario-campo">
-                    <label
-                    htmlFor="propietario"
-                    className="formulario-label"
-                    >Nombre Propietario</label>
-                    <input
-                    id="propietario"
-                    type="text"
-                    className="formulario-input"
-                    placeholder="Zuriel Valencia"
-                    value={propietario}
-                    onChange={(e) => {setPropietario(e.target.value) }}
-                    />
+                    <label htmlFor="nombrePropietario" className="formulario-label">Nombre Propietario</label>
+                    <input id="nombrePropietario" type="text" className="formulario-input" placeholder="Juan Perez" value={nombrePropietario} onChange={(e) => { setNombrePropietario(e.target.value) }} />
                 </div>
-                <div className="formulario-campo">
-                    <label
-                    htmlFor="correo"
-                    className="formulario-label"
-                    >E-mail</label>
-                    <input
-                    id="correo"
-                    type="email"
-                    className="formulario-input"
-                    placeholder="tilininsano@gmail.com"
-                    value={correo}
-                    onChange={(e) => {setCorreo(e.target.value) }}
-                    />
+                <div className="">
+                    <label htmlFor="correo" className="formulario-label">Correo</label>
+                    <input id="correo" type="email" className="formulario-input" placeholder="correo@email.com" value={correo} onChange={(e) => { setCorreo(e.target.value) }} />
                 </div>
-                <div className="formulario-campo">
-                    <label
-                    htmlFor="telefono"
-                    className="formulario-label"
-                    >Telefono</label>
-                    <input
-                    id="telefono"
-                    type="tel"
-                    className="formulario-input"
-                    placeholder="123456789"
-                    value={telefono}
-                    onChange={(e) => {setTelefono(e.target.value) }}
-                    />
+                <div className="">
+                    <label htmlFor="telefono" className="formulario-label">Telefono</label>
+                    <input id="telefono" type="tel" className="formulario-input" placeholder="1234567890" value={telefono} onChange={(e) => { setTelefono(e.target.value) }} />
                 </div>
-                <div className="formulario-campo">
-                    <label
-                    htmlFor="fechaAlta"
-                    className="formulario-label"
-                    >Fecha de ingreso</label>
-                    <input
-                    id="fechaAlta"
-                    type="date"
-                    className="formulario-input"
-                    placeholder="14/05/2026"
-                    value={fechaAlta}
-                    onChange={(e) => {setFechaAlta(e.target.value) }}
-                    />
+                <div className="">
+                    <label htmlFor="fechaAlta" className="formulario-label">Fecha Alta</label>
+                    <input id="fechaAlta" type="date" className="formulario-input" value={fechaAlta} onChange={(e) => { setFechaAlta(e.target.value) }} />
                 </div>
-                <div className="formulario-campo">
-                    <label
-                    htmlFor="sintomas"
-                    className="formulario-label"
-                    >Sintomas que presenta</label>
-                    <textarea
-                    id="sintomas"
-                    className="formulario-input"
-                    placeholder="Falta de apetito"
-                    value={sintomas}
-                    onChange={(e) => {setSintomas(e.target.value) }}
-                    rows={4}
-                    />
+                <div className="">
+                    <label htmlFor="sintomas" className="formulario-label">Sintomas</label>
+                    <textarea id="sintomas" className="formulario-input" placeholder="Fiebre" value={sintomas} onChange={(e) => { setSintomas(e.target.value) }} rows="4"></textarea>
                 </div>
 
-                <button
-                type="submit"
-                className="formulario-btn-submit"
-                >Agregar Paciente</button>
+                <button type="submit" className="formulario-btn-submit">Agregar Cita</button>
             </form>
-        </div>
 
+        </div>
     );
 };
 
-
-export default Formulario;
+export default Formulario

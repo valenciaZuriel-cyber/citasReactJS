@@ -6,21 +6,21 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
-.title {
+.title,
+.titulo {
     text-align: center;
     font-size: 30px;
     color: #374151;
     font-weight: 600;
     margin: 10px 0
-    
 }
 
-.title-bold {
+.titulo-bold {
     font-weight: 900;
     color: #6D28D9;
 }
 
-.btn-nueva-cita{
+.btn-nueva-cita {
     display: block;
     background-color: #6D28D9;
     padding: 15px;
@@ -29,24 +29,24 @@
     border: none;
     cursor: pointer;
     width: 100%;
-    max-width: 500px;
-    transition: background-color 0.2 ease;
-    
+    max-width: 400px;
+    transition: background-color 0.2s ease;
 }
-.btn-nueva-cita:hover{
+
+.btn-nueva-cita:hover {
     background-color: #5b21b6;
 }
 
-.btn-texto-nueva-cita{
+.btn-texto-nueva-cita {
     text-align: center;
     color: #FFF;
     font-size: 18px;
     font-weight: 900;
-    text-decoration: uppercase;
+    text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.noPacientes{
+.noPacientes {
     margin-top: 40px;
     text-align: center;
     font-size: 24px;
@@ -54,7 +54,7 @@
     color: #4B5563;
 }
 
-.listado{
+.listado {
     margin-top: 50px;
     max-width: 600px;
     display: flex;
@@ -62,7 +62,8 @@
     gap: 15px;
 }
 
-.modal-overlay{
+.modalOverlay,
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -76,7 +77,8 @@
     padding: 20px;
 }
 
-.modal-content{
+.modalContent,
+.modal-content {
     background-color: #FFF;
     border-radius: 10px;
     padding: 25px;
