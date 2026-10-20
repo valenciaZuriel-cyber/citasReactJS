@@ -7,26 +7,16 @@ import '../css/formulario.css';
  * 
  */
 
-const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pacienteEditado }) => {
+const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pacienteEditado, setPacienteEditado }) => {
+    // 1ra parte = Variable, valor, state // Variable que contiene el valor del state, funcion que modifica el state
+    // 2da parte = funcion que modifica el valor, variable, state (), lo modifica completo
     const [paciente, setPaciente] = useState('');
-
-    //Create 5 new states
-    //nombrePropietario
-    //correo
-    //telefono
-    //fechaAlta
-    //sintomas (descripcion del problema)
-    //Create 5 new inputs
-    //Type Inputs: text, email, tel, date
-    //Inputs: input, textarea (contenido con mucho texto)
-    
-    //Formulario - Nuevo 
-
     const [nombrePropietario, setNombrePropietario] = useState('');
     const [correo, setCorreo] = useState('');
     const [telefono, setTelefono] = useState('');
     const [fechaAlta, setFechaAlta] = useState('');
     const [sintomas, setSintomas] = useState('');
+    const [idPaciente, setidPaciente] = useState('');
 
     useEffect(() => {
         console.log(pacienteEditado)
@@ -39,11 +29,27 @@ const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pa
             setTelefono(pacienteEditado.telefono);
             setFechaAlta(pacienteEditado.fechaAlta);
             setSintomas(pacienteEditado.sintomas);
+            setidPaciente(pacienteEditado.id);
         }
 
     },[]);//Dependencias(se ponen estados) cada que se ejecute un cambio se estara ejecutando al mismo tiempo el useEffect
 
-    // Variable que contiene el valor del state, funcion que modifica el state
+    const resetFormulario = () => {
+        setPaciente('');
+        setNombrePropietario('');
+        setCorreo('');
+        setTelefono('');
+        setFechaAlta('');
+        setSintomas('');
+    }
+
+    const handleCancelar = () => {
+        resetFormulario();
+        setModalVisible(false);
+        setPacienteEditado({});
+    }
+
+    
 
 
     const handleCita = (e) => {
@@ -73,19 +79,18 @@ const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pa
         // Cerrar el modal una vez guardada la cita
         setModalVisible(false);
     }
-
+/*Todos los eventos y triggers empiezan con "on"*/
     return (
         <div className="formulario-contenido">
-            <h2 className="formulario-titulo">Nueva
+            <h2 className="formulario-titulo">{idPaciente ? 'Editar' : 'Nueva'}
                 <span className="formulario-titulo-bold"> Cita</span>
             </h2>
             <button 
                 className="formulario-btn-cancelar" 
-                onClick={() => { setModalVisible(false) }}
+                onClick={() => handleCancelar()}
             >
                 <span className="formulario-btn-texto-cancelar">Cancelar</span>
             </button>
-
             <form onSubmit={handleCita}>
                 <div className="formulario-campo">
                     <label htmlFor="paciente" className="formulario-label">Nombre Paciente</label>
@@ -112,7 +117,7 @@ const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pa
                     <textarea id="sintomas" className="formulario-input" placeholder="Fiebre" value={sintomas} onChange={(e) => { setSintomas(e.target.value) }} rows="4"></textarea>
                 </div>
 
-                <button type="submit" className="formulario-btn-submit">Agregar Cita</button>
+                <button type="submit" className="formulario-btn-submit">{idPaciente ? 'Editar' : 'Agregar'} Cita</button>
             </form>
 
         </div>

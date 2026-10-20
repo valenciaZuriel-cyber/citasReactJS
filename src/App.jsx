@@ -60,6 +60,7 @@ function App() {
               pacientes={pacientes}
               setPacientes={setPacientes}
               pacienteEditado={pacienteEditado}
+              setPacienteEditado={setPacienteEditado}
               // Estas son props que se pasan al componente Formulario
               
             />
