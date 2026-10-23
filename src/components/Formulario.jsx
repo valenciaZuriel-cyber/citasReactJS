@@ -43,13 +43,16 @@ const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pa
         setSintomas('');
     }
 
-    const handleCancelar = () => {
+    const cleanForm = () => {
         resetFormulario();
         setModalVisible(false);
         setPacienteEditado({});
     }
 
-    
+
+    const handleCancelar = () => {
+        cleanForm();
+    }
 
 
     const handleCita = (e) => {
@@ -69,15 +72,27 @@ const Formulario = ({ modalVisible, setModalVisible, pacientes, setPacientes, pa
             sintomas
         };
 
-        nuevoPaciente.id = Date.now();
-        console.log(nuevoPaciente);
+        if(pacienteEditado.id){
+            //Si ya tiene id
+           const nuevosPacientes = pacientes.map((paciente) => {
+                if (paciente.id === pacienteEditado.id){
+                    nuevoPaciente.id = paciente.id;
+                    return nuevoPaciente;
+                }else{
+                    return paciente;
+                }
+            });
+            setPacientes(nuevosPacientes);
+        } else{
+            //si no tiene id
+            nuevoPaciente.id = Date.now();
+            //save all new records
+            // Usa el operador spread (...) para copiar los pacientes previos sin mutar el arreglo original y agrega el nuevoPaciente al final
+            setPacientes([...pacientes, nuevoPaciente]);
+            //state = add my object into the array
+        }
 
-        // Guarda todos los datos en el state 'pacientes'
-        setPacientes([...pacientes, nuevoPaciente]);
-        // Usa el operador spread (...) para copiar los pacientes previos sin mutar el arreglo original y agrega el nuevoPaciente al final
-
-        // Cerrar el modal una vez guardada la cita
-        setModalVisible(false);
+        cleanForm();
     }
 /*Todos los eventos y triggers empiezan con "on"*/
     return (
